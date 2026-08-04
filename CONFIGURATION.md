@@ -61,10 +61,10 @@ Configuration files use JSON format with the following options:
 ```json
 {
   "apiKey": "your-api-key-here",
-  "opusModel": "glm-4.6",
-  "sonnetModel": "glm-4.5",
-  "haikuModel": "glm-4.5-air",
-  "subagentModel": "glm-4.6",
+  "opusModel": "glm-5.2[1m]",
+  "sonnetModel": "glm-5.1",
+  "haikuModel": "glm-5.1",
+  "subagentModel": "glm-5.2[1m]",
   "defaultModel": "opus",
   "enableThinking": "true",
   "enableStreaming": "true",
@@ -84,27 +84,27 @@ Configuration files use JSON format with the following options:
 
 #### opusModel
 - **Type**: String
-- **Default**: `"glm-4.6"`
+- **Default**: `"glm-5.2[1m]"`
 - **Description**: Z.AI model to use for Claude opus tier requests
-- **Example**: `"glm-4.6"`, `"glm-4.5"`
+- **Example**: `"glm-5.2[1m]"`, `"glm-5.1"`
 
 #### sonnetModel
 - **Type**: String
-- **Default**: `"glm-4.5"`
+- **Default**: `"glm-5.1"`
 - **Description**: Z.AI model to use for Claude sonnet tier requests
-- **Example**: `"glm-4.5"`, `"glm-4.5-air"`
+- **Example**: `"glm-5.1"`, `"glm-5.1"`
 
 #### haikuModel
 - **Type**: String
-- **Default**: `"glm-4.5-air"`
+- **Default**: `"glm-5.1"`
 - **Description**: Z.AI model to use for Claude haiku tier requests
-- **Example**: `"glm-4.5-air"`
+- **Example**: `"glm-5.1"`
 
 #### subagentModel
 - **Type**: String
-- **Default**: `"glm-4.6"`
+- **Default**: `"glm-5.2[1m]"`
 - **Description**: Z.AI model to use for Claude Code subagent operations
-- **Example**: `"glm-4.6"`
+- **Example**: `"glm-5.2[1m]"`
 
 #### defaultModel
 - **Type**: String
@@ -271,7 +271,7 @@ When a per-project config exists:
 ```json
 {
   "apiKey": "global-key",
-  "opusModel": "glm-4.6",
+  "opusModel": "glm-5.2[1m]",
   "defaultModel": "opus",
   "reasoningEffort": "high"
 }
@@ -289,7 +289,7 @@ When a per-project config exists:
 ```json
 {
   "apiKey": "global-key",           // from global
-  "opusModel": "glm-4.6",           // from global
+  "opusModel": "glm-5.2[1m]",           // from global
   "defaultModel": "sonnet",         // overridden by project
   "reasoningEffort": "medium"       // overridden by project
 }
@@ -359,9 +359,9 @@ Always add per-project configs to `.gitignore`:
 **~/.config/zai/config.json:**
 ```json
 {
-  "opusModel": "glm-4.6",
-  "sonnetModel": "glm-4.5",
-  "haikuModel": "glm-4.5-air"
+  "opusModel": "glm-5.2[1m]",
+  "sonnetModel": "glm-5.1",
+  "haikuModel": "glm-5.1"
 }
 ```
 
@@ -376,10 +376,10 @@ export ZAI_API_KEY="your-api-key-here"
 ```json
 {
   "apiKey": "your-api-key-here",
-  "opusModel": "glm-4.6",
-  "sonnetModel": "glm-4.5",
-  "haikuModel": "glm-4.5-air",
-  "subagentModel": "glm-4.6",
+  "opusModel": "glm-5.2[1m]",
+  "sonnetModel": "glm-5.1",
+  "haikuModel": "glm-5.1",
+  "subagentModel": "glm-5.2[1m]",
   "defaultModel": "sonnet",
   "enableThinking": "true",
   "enableStreaming": "true",

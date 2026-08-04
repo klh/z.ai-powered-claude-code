@@ -65,70 +65,70 @@ Then you can omit `apiKey` from the config file or leave it as `"your-api-key"`.
 
 ### opusModel
 ```json
-"opusModel": "glm-4.6"
+"opusModel": "glm-5.2[1m]"
 ```
 
 **Description:** The Z.AI model to use when Claude Code requests the "opus" tier model.
 
-**Default:** `"glm-4.6"`
+**Default:** `"glm-5.2[1m]"`
 
 **Use Case:** Highest quality, most capable model for complex tasks.
 
 **Alternatives:**
-- `"glm-4.6"` - Latest and most capable (recommended)
-- `"glm-4.5"` - Slightly older but still very capable
+- `"glm-5.2[1m]"` - Latest and most capable (recommended)
+- `"glm-5.1"` - Slightly older but still very capable
 
 ---
 
 ### sonnetModel
 ```json
-"sonnetModel": "glm-4.5"
+"sonnetModel": "glm-5.1"
 ```
 
 **Description:** The Z.AI model to use when Claude Code requests the "sonnet" tier model.
 
-**Default:** `"glm-4.5"`
+**Default:** `"glm-5.1"`
 
 **Use Case:** Balanced performance and speed for most tasks.
 
 **Alternatives:**
-- `"glm-4.5"` - Good balance (recommended)
-- `"glm-4.5-air"` - Faster, lighter weight
+- `"glm-5.1"` - Good balance (recommended)
+- `"glm-5.1"` - Faster, lighter weight
 
 ---
 
 ### haikuModel
 ```json
-"haikuModel": "glm-4.5-air"
+"haikuModel": "glm-5.1"
 ```
 
 **Description:** The Z.AI model to use when Claude Code requests the "haiku" tier model.
 
-**Default:** `"glm-4.5-air"`
+**Default:** `"glm-5.1"`
 
 **Use Case:** Fast, lightweight model for simple tasks.
 
 **Alternatives:**
-- `"glm-4.5-air"` - Fastest, most efficient (recommended)
-- `"glm-4.5"` - More capable but slower
+- `"glm-5.1"` - Fastest, most efficient (recommended)
+- `"glm-5.1"` - More capable but slower
 
 ---
 
 ### subagentModel
 ```json
-"subagentModel": "glm-4.6"
+"subagentModel": "glm-5.2[1m]"
 ```
 
 **Description:** The Z.AI model to use for Claude Code's subagent operations (background tasks, tool use, etc.).
 
-**Default:** `"glm-4.6"`
+**Default:** `"glm-5.2[1m]"`
 
 **Use Case:** Background operations that benefit from higher capability.
 
 **Alternatives:**
-- `"glm-4.6"` - Best for complex subagent tasks (recommended)
-- `"glm-4.5"` - Good balance
-- `"glm-4.5-air"` - Faster but less capable
+- `"glm-5.2[1m]"` - Best for complex subagent tasks (recommended)
+- `"glm-5.1"` - Good balance
+- `"glm-5.1"` - Faster but less capable
 
 ---
 
@@ -145,7 +145,7 @@ Then you can omit `apiKey` from the config file or leave it as `"your-api-key"`.
 - `"opus"` - Highest quality (uses `opusModel`)
 - `"sonnet"` - Balanced (uses `sonnetModel`)
 - `"haiku"` - Fastest (uses `haikuModel`)
-- Or specify a direct model name like `"glm-4.5"`
+- Or specify a direct model name like `"glm-5.1"`
 
 **Examples:**
 ```bash
@@ -260,10 +260,10 @@ z --model haiku
 **Config file** (`~/.config/zai/config.json`):
 ```json
 {
-  "opusModel": "glm-4.6",
-  "sonnetModel": "glm-4.5",
-  "haikuModel": "glm-4.5-air",
-  "subagentModel": "glm-4.6",
+  "opusModel": "glm-5.2[1m]",
+  "sonnetModel": "glm-5.1",
+  "haikuModel": "glm-5.1",
+  "subagentModel": "glm-5.2[1m]",
   "defaultModel": "sonnet"
 }
 ```
@@ -285,10 +285,10 @@ export ZAI_API_KEY="your-actual-api-key"
 ```json
 {
   "apiKey": "your-api-key",
-  "opusModel": "glm-4.5",
-  "sonnetModel": "glm-4.5-air",
-  "haikuModel": "glm-4.5-air",
-  "subagentModel": "glm-4.6",
+  "opusModel": "glm-5.1",
+  "sonnetModel": "glm-5.1",
+  "haikuModel": "glm-5.1",
+  "subagentModel": "glm-5.2[1m]",
   "defaultModel": "haiku",
   "reasoningEffort": "medium"
 }
@@ -306,10 +306,10 @@ export ZAI_API_KEY="your-actual-api-key"
 ```json
 {
   "apiKey": "your-api-key",
-  "opusModel": "glm-4.6",
-  "sonnetModel": "glm-4.6",
-  "haikuModel": "glm-4.5",
-  "subagentModel": "glm-4.6",
+  "opusModel": "glm-5.2[1m]",
+  "sonnetModel": "glm-5.2[1m]",
+  "haikuModel": "glm-5.1",
+  "subagentModel": "glm-5.2[1m]",
   "defaultModel": "opus",
   "reasoningEffort": "max"
 }

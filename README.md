@@ -6,7 +6,7 @@ A set of wrapper scripts and configuration files to enable Claude Code to use Z.
 
 ## Overview
 
-This project allows you to use Z.AI's GLM models (including GLM-4.6) with Claude Code by setting up the appropriate environment variables and configuration. It includes:
+This project allows you to use Z.AI's GLM models (including GLM-5.2) with Claude Code by setting up the appropriate environment variables and configuration. It includes:
 
 - **Wrapper scripts** for launching Claude Code with Z.AI models
 - **Status line configuration** that displays model information, git branch, and usage statistics
@@ -111,10 +111,10 @@ Configuration files use JSON format:
 ```json
 {
   "apiKey": "your-api-key",
-  "opusModel": "glm-4.6",
-  "sonnetModel": "glm-4.5",
-  "haikuModel": "glm-4.5-air",
-  "subagentModel": "glm-4.6",
+  "opusModel": "glm-5.2[1m]",
+  "sonnetModel": "glm-5.1",
+  "haikuModel": "glm-5.1",
+  "subagentModel": "glm-5.2[1m]",
   "defaultModel": "opus",
   "enableThinking": "true",
   "enableStreaming": "true",
@@ -127,10 +127,10 @@ Configuration files use JSON format:
 ### Configuration Options
 
 - **apiKey**: Your Z.AI API key (can be omitted if using `ZAI_API_KEY` environment variable)
-- **opusModel**: Model to use for opus tier requests (default: "glm-4.6")
-- **sonnetModel**: Model to use for sonnet tier requests (default: "glm-4.5")
-- **haikuModel**: Model to use for haiku tier requests (default: "glm-4.5-air")
-- **subagentModel**: Model to use for subagent tasks and specialized agents (default: "glm-4.6")
+- **opusModel**: Model to use for opus tier requests (default: "glm-5.2[1m]")
+- **sonnetModel**: Model to use for sonnet tier requests (default: "glm-5.1")
+- **haikuModel**: Model to use for haiku tier requests (default: "glm-5.1")
+- **subagentModel**: Model to use for subagent tasks and specialized agents (default: "glm-5.2[1m]")
 - **defaultModel**: Default model to use when no model is specified (default: "opus")
 - **enableThinking**: Enable AI thinking capabilities (default: "true")
 - **enableStreaming**: Enable streaming responses (default: "true")
@@ -313,9 +313,9 @@ glm --help
 
 The wrapper maps Claude model tiers to Z.AI models:
 
-- **opus** → `glm-4.6` (configurable via `opusModel`)
-- **sonnet** → `glm-4.5` (configurable via `sonnetModel`)
-- **haiku** → `glm-4.5-air` (configurable via `haikuModel`)
+- **opus** → `glm-5.2[1m]` (configurable via `opusModel`)
+- **sonnet** → `glm-5.1` (configurable via `sonnetModel`)
+- **haiku** → `glm-5.1` (configurable via `haikuModel`)
 
 Set a default model in your configuration:
 ```json

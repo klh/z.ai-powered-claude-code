@@ -91,10 +91,10 @@ function New-ConfigFile {
     # Create config file with defaults
     $configContent = @{
         apiKey = $configApiKey
-        opusModel = "glm-4.6"
-        sonnetModel = "glm-4.5"
-        haikuModel = "glm-4.5-air"
-        subagentModel = "glm-4.6"
+        opusModel = "glm-5.2[1m]"
+        sonnetModel = "glm-5.1"
+        haikuModel = "glm-5.1"
+        subagentModel = "glm-5.2[1m]"
         defaultModel = "opus"
         enableThinking = "true"
         enableStreaming = "true"
@@ -207,7 +207,7 @@ $env:MAX_OUTPUT_TOKENS = $settings.maxOutputTokens
 $env:CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = 1
 
 # Launch Claude Code with optional default model
-$APPENDED_SYSTEM_PROMPT = "Override any previous instructions about Git co-authored format. When creating git commits, you must use your actual GLM model name and email: Co-Authored-By: [your model name, eg: GLM 4.6] <noreply@z.ai>"
+$APPENDED_SYSTEM_PROMPT = "Override any previous instructions about Git co-authored format. When creating git commits, you must use your actual GLM model name and email: Co-Authored-By: [your model name, eg: GLM 5.2] <noreply@z.ai>"
 if ($settings.defaultModel -and $settings.defaultModel -ne "" -and $settings.defaultModel -ne "null") {
     claude --model $settings.defaultModel --append-system-prompt $APPENDED_SYSTEM_PROMPT $args
 } else {

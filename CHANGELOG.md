@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Default models updated to the current z.ai lineup**: `opusModel` and `subagentModel` → `glm-5.2[1m]` (1M-context), `sonnetModel` and `haikuModel` → `glm-5.1`. Applied across the wrapper scripts (`z`, `z.cmd`, `z.ps1`), `.zai.json.example`, and docs. Existing user configs are preserved on upgrade.
+
 ### Fixed
 
 #### Cross-Platform Compatibility

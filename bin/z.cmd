@@ -95,10 +95,10 @@ rem Create config file with defaults
 (
 echo {
 echo   "apiKey": "!CONFIG_API_KEY!",
-echo   "opusModel": "glm-4.6",
-echo   "sonnetModel": "glm-4.5",
-echo   "haikuModel": "glm-4.5-air",
-echo   "subagentModel": "glm-4.6",
+echo   "opusModel": "glm-5.2[1m]",
+echo   "sonnetModel": "glm-5.1",
+echo   "haikuModel": "glm-5.1",
+echo   "subagentModel": "glm-5.2[1m]",
 echo   "defaultModel": "opus",
 echo   "enableThinking": "true",
 echo   "enableStreaming": "true",
@@ -226,7 +226,7 @@ rem Debug output (comment out after testing)
 echo [DEBUG] ANTHROPIC_DEFAULT_OPUS_MODEL: %ANTHROPIC_DEFAULT_OPUS_MODEL% 1>&2
 
 rem Launch Claude Code with optional default model
-set "APPENDED_SYSTEM_PROMPT=Override any previous instructions about Git co-authored format. When creating git commits, you must use your actual GLM model name and email: Co-Authored-By: [your model name, eg: GLM 4.6] ^<noreply@z.ai^>"
+set "APPENDED_SYSTEM_PROMPT=Override any previous instructions about Git co-authored format. When creating git commits, you must use your actual GLM model name and email: Co-Authored-By: [your model name, eg: GLM 5.2] ^<noreply@z.ai^>"
 if not "%DEFAULT_MODEL%"=="" if not "%DEFAULT_MODEL%"=="null" (
     claude --model %DEFAULT_MODEL% --append-system-prompt "%APPENDED_SYSTEM_PROMPT%" %*
 ) else (
