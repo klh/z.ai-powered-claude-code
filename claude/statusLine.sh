@@ -53,7 +53,7 @@ if STATUS=$(git status -b --porcelain 2>/dev/null); then
   DIRTY=""; [ "$REST" != "$STATUS" ] && [ -n "$REST" ] && DIRTY="${BOLD_RED}✱${RESET}"
   AB=""; [ -n "$AHEAD" ]  && AB+=" ${BOLD_GREEN}↑${AHEAD}${RESET}"
   [ -n "$BEHIND" ] && AB+=" ${BOLD_RED}↓${BEHIND}${RESET}"
-  [ -n "$BRANCH" ] && GIT_PART=" [2m[0m  ${BOLD_BLUE}${BRANCH}${RESET}${DIRTY}${AB}"
+  [ -n "$BRANCH" ] && GIT_PART=" | 🌿 ${BOLD_BLUE}${BRANCH}${RESET}${DIRTY}${AB}"
 fi
 
 if   ((PCT_INT >= 80)); then CC=$RED;    elif ((PCT_INT >= 50)); then CC=$YELLOW; else CC=$GREEN; fi
@@ -62,13 +62,13 @@ bar=""; i=0
 while ((i < filled)); do bar+="█"; ((i++)); done
 while ((i < 10));     do bar+="░"; ((i++)); done
 TAG=""; ((CTX_SIZE >= 1000000)) && TAG=" ∞"
-CTX_PART=" [2m[0m  ${CC}${bar}${RESET} ${CC}${PCT_INT}%${RESET}${TAG}"
+CTX_PART=" | 🧠 ${CC}${bar}${RESET} ${CC}${PCT_INT}%${RESET}${TAG}"
 
 COLS=${COLUMNS:-0}
-DUR_PART=" [2m[0m  ${GREEN}${API_DUR}${RESET}/${PURPLE}${DUR}${RESET}s"
-COST_PART=" [2m[0m ${GREEN}${COST_FMT}${RESET}"
+DUR_PART=" | ⌚ ${GREEN}${API_DUR}${RESET}/${PURPLE}${DUR}${RESET}s"
+COST_PART=" | 💲${GREEN}${COST_FMT}${RESET}"
 ((COLS > 0 && COLS < 110)) && { DUR_PART=""; COST_PART=""; }
-((COLS > 0 && COLS < 80))  && CTX_PART=" [2m[0m  ${CC}${PCT_INT}%${RESET}${TAG}"
+((COLS > 0 && COLS < 80))  && CTX_PART=" | 🧠 ${CC}${PCT_INT}%${RESET}${TAG}"
 
-OUTPUT="${RESET}${ICON} [ ${MC}${MODEL_NAME}${RESET} ]  ${BOLD_YELLOW}${DIR_NAME}${RESET}${GIT_PART}${CTX_PART}${DUR_PART}${COST_PART} ${ICON}"
+OUTPUT="${RESET}${ICON} [ ${MC}${MODEL_NAME}${RESET} ] 📁 ${BOLD_YELLOW}${DIR_NAME}${RESET}${GIT_PART}${CTX_PART}${DUR_PART}${COST_PART} ${ICON}"
 printf '%b\n' "$OUTPUT"
