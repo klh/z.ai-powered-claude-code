@@ -1,12 +1,12 @@
 #!/bin/bash
-# Claude Code Status Line — NF + powerline arrows, tier color, effort, git, context, compact.
+# Claude Code Status Line — NF + powerline arrows; model+effort, pwd(repo+subdir), git, +lines, context, cost.
 RESET='\033[0m'
 BOLD_WHITE='\033[1;37m'; BOLD_YELLOW='\033[1;33m'; BOLD_BLUE='\033[1;34m'
 BOLD_GREEN='\033[1;32m'; BOLD_RED='\033[1;31m'; BOLD_BLACK='\033[1;30m'
 GREEN='\033[0;32m'; YELLOW='\033[0;33m'; RED='\033[0;31m'; PURPLE='\033[0;35m'
 
 input=$(cat)
-IFS=$'\t' read -r MODEL_ID MODEL_NAME CURRENT_DIR LINES_ADDED LINES_REMOVED API_DUR_MS DUR_MS COST PCT CTX_SIZE EFFORT <<< "$(
+IFS=$'\t' read -r MODEL_ID MODEL_NAME CURRENT_DIR LINES_ADDED LINES_REMOVED API_DUR_MS DUR_MS COST PCT CTX_SIZE EFFORT REPO_OWNER REPO_NAME <<< "$(
   jq -r '[
     (.model.id // ""),(.model.display_name // "unknown"),
     (.workspace.current_dir // .cwd // ""),
@@ -14,14 +14,30 @@ IFS=$'\t' read -r MODEL_ID MODEL_NAME CURRENT_DIR LINES_ADDED LINES_REMOVED API_
     (.cost.total_api_duration_ms // 0),(.cost.total_duration_ms // 0),
     (.cost.total_cost_usd // 0),
     (.context_window.used_percentage // 0),(.context_window.context_window_size // 0),
-    (.effort.level // "")
+    (.effort.level // ""),
+    (.workspace.repo.owner // ""),(.workspace.repo.name // "")
   ] | @tsv' <<< "$input"
 )"
 API_DUR=$(( ${API_DUR_MS:-0} / 1000 )); DUR=$(( ${DUR_MS:-0} / 1000 ))
 COST_FMT=$(printf '%.3f' "${COST:-0}"); PCT_INT=$(printf '%.0f' "${PCT:-0}")
-CTX_SIZE=${CTX_SIZE:-0}; DIR_NAME="${CURRENT_DIR##*/}"; DIR_NAME="${DIR_NAME//\\/\\\\}"
-COLS=${COLUMNS:-0}
-SEP="  "
+CTX_SIZE=${CTX_SIZE:-0}; COLS=${COLUMNS:-0}
+SEP="  "
+
+# location: owner/repo + subdir (or ~-abbreviated pwd outside a repo); truncated when narrow
+if [ -n "$REPO_OWNER" ] && [ -n "$REPO_NAME" ]; then
+  REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+  REL="${CURRENT_DIR#$REPO_ROOT}"; REL="${REL#/}"
+  if [ -n "$REL" ]; then
+    (( COLS > 0 && COLS < 110 )) && REL="…/${REL##*/}"
+    LOC="${BOLD_BLACK}${REPO_OWNER}/${RESET}${BOLD_YELLOW}${REPO_NAME}${RESET}${BOLD_BLACK}/${REL}${RESET}"
+  else
+    LOC="${BOLD_BLACK}${REPO_OWNER}/${RESET}${BOLD_YELLOW}${REPO_NAME}${RESET}"
+  fi
+else
+  P="${CURRENT_DIR/#$HOME/\~}"
+  (( COLS > 0 && COLS < 110 )) && P="…/${P##*/}"
+  LOC="${BOLD_YELLOW}${P}${RESET}"
+fi
 
 case "$MODEL_ID" in
   *opus*|glm-5.2*)   MC=$BOLD_GREEN ;;
@@ -32,11 +48,8 @@ esac
 if [[ "$MODEL_ID" == claude-* ]]; then ICON="👾"; else ICON="👹"; fi
 
 case "$EFFORT" in
-  max|xhigh) EC=$BOLD_RED ;;
-  high)      EC=$BOLD_YELLOW ;;
-  medium)    EC=$GREEN ;;
-  low)       EC=$BOLD_BLACK ;;
-  *)         EC="" ;;
+  max|xhigh) EC=$BOLD_RED ;; high) EC=$BOLD_YELLOW ;;
+  medium) EC=$GREEN ;; low) EC=$BOLD_BLACK ;; *) EC="" ;;
 esac
 ETAG=""; [ -n "$EC" ] && ETAG=" ${BOLD_BLACK}·${RESET}${EC}${EFFORT}${RESET}"
 
@@ -54,7 +67,12 @@ if STATUS=$(git status -b --porcelain 2>/dev/null); then
   DIRTY=""; [ "$REST" != "$STATUS" ] && [ -n "$REST" ] && DIRTY="${BOLD_RED}✱${RESET}"
   AB=""; [ -n "$AHEAD" ] && AB+=" ${BOLD_GREEN}↑${AHEAD}${RESET}"
   [ -n "$BEHIND" ] && AB+=" ${BOLD_RED}↓${BEHIND}${RESET}"
-  [ -n "$BRANCH" ] && GIT_PART="${SEP} ${BOLD_BLUE}${BRANCH}${RESET}${DIRTY}${AB}"
+  [ -n "$BRANCH" ] && GIT_PART="${SEP} ${BOLD_BLUE}${BRANCH}${RESET}${DIRTY}${AB}"
+fi
+
+CHG=""
+if (( ${LINES_ADDED:-0} > 0 || ${LINES_REMOVED:-0} > 0 )); then
+  CHG="${SEP}${BOLD_GREEN}+${LINES_ADDED}${RESET} ${BOLD_RED}-${LINES_REMOVED}${RESET}"
 fi
 
 if   ((PCT_INT >= 80)); then CC=$RED; elif ((PCT_INT >= 50)); then CC=$YELLOW; else CC=$GREEN; fi
@@ -63,13 +81,13 @@ bar=""; i=0
 while ((i < filled)); do bar+="█"; ((i++)); done
 while ((i < 5));       do bar+="░"; ((i++)); done
 TAG=""; ((CTX_SIZE >= 1000000)) && TAG="∞"
-CTX_PART="${SEP} "
+CTX_PART="${SEP} "
 (( COLS <= 0 || COLS >= 110 )) && CTX_PART+="${CC}${bar}${RESET} "
 CTX_PART+="${CC}${PCT_INT}%${RESET}"; [ -n "$TAG" ] && CTX_PART+="${CC}${TAG}${RESET}"
 
-DUR_PART="${SEP} ${GREEN}${API_DUR}${RESET}/${PURPLE}${DUR}${RESET}s"
-COST_PART="${SEP}${GREEN}${COST_FMT}${RESET}"
+DUR_PART="${SEP} ${GREEN}${API_DUR}${RESET}/${PURPLE}${DUR}${RESET}s"
+COST_PART="${SEP}${GREEN}${COST_FMT}${RESET}"
 ((COLS > 0 && COLS < 110)) && { DUR_PART=""; COST_PART=""; }
 
-OUTPUT="${RESET}${ICON} [ ${MC}${MODEL_NAME}${RESET}${ETAG} ]  ${BOLD_YELLOW}${DIR_NAME}${RESET}${GIT_PART}${CTX_PART}${DUR_PART}${COST_PART} ${ICON}"
+OUTPUT="${RESET}${ICON} [ ${MC}${MODEL_NAME}${RESET}${ETAG} ]  ${LOC}${GIT_PART}${CHG}${CTX_PART}${DUR_PART}${COST_PART} ${ICON}"
 printf '%b\n' "$OUTPUT"
