@@ -1,0 +1,12 @@
+{
+  "name": "klh-claude-code-statusline",
+  "owner": { "name": "klh" },
+  "plugins": [
+    {
+      "name": "claude-code-statusline",
+      "source": "./",
+      "description": "Rich status line for Claude Code.",
+      "version": "1.0.0"
+    }
+  ]
+}

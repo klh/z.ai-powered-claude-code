@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin.json",
+  "name": "claude-code-statusline",
+  "version": "1.0.0",
+  "description": "Rich, model-agnostic status line for Claude Code — model+effort, repo/pwd, git, lines, context, cost. Nerd Font + Powerline.",
+  "author": { "name": "klh" },
+  "homepage": "https://github.com/klh/claude-code-statusline"
+}

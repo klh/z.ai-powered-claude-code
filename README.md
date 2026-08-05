@@ -11,6 +11,20 @@ Narrow terminals compact automatically (drops time/cost/context-bar, truncates b
 *Both screenshots use sample/fake data.*
 
 ## Install
+
+**A. One-liner (recommended):**
+```bash
+curl -fsSL https://raw.githubusercontent.com/klh/claude-code-statusline/main/install.sh | bash
+```
+
+**B. Claude Code plugin:**
+```
+/plugin marketplace add klh/claude-code-statusline
+/plugin install claude-code-statusline@klh-claude-code-statusline
+/install-statusline
+```
+
+**C. Manual:**
 1. `cp claude/statusLine.sh ~/.claude/statusLine.sh && chmod +x ~/.claude/statusLine.sh`
 2. Merge into `~/.claude/settings.json` (don't replace the file):
    ```json
@@ -24,4 +38,4 @@ A **Nerd Font** (e.g. `FiraCode Nerd Font Mono`) and **jq**.
 ## Notes
 - Narrow terminals (<110 cols): drops time/cost/context-bar; truncates branch + path.
 - One `jq` pass + one `git` call (~40 ms); bash-3.2-compatible. Tweak colors/thresholds in `claude/statusLine.sh`.
-- Screenshots are generated from `assets/statusline-*.html` (fake data) — edit and re-render with headless Chrome if you want to refresh them.
+- Screenshots are generated from `assets/statusline-*.html` (fake data) — re-render with headless Chrome to refresh.
