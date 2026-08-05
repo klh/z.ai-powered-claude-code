@@ -1,6 +1,6 @@
 {
   "statusLine": {
     "type": "command",
-    "command": "bash -c '. \"$HOME/.claude/statusLine.sh\""
+    "command": "bash $HOME/.claude/statusLine.sh"
   }
 }
