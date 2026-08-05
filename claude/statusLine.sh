@@ -45,7 +45,7 @@ case "$MODEL_ID" in
   *sonnet*|glm-5.1*) MC=$BOLD_BLUE ;;
   *)                 MC=$BOLD_WHITE ;;
 esac
-if [[ "$MODEL_ID" == claude-* ]]; then ICON="👾"; else ICON="👹"; fi
+if [[ "$MODEL_ID" == claude-* ]]; then ICON="🤖"; else ICON="⚡"; fi
 
 case "$EFFORT" in
   max|xhigh) EC=$BOLD_RED ;; high) EC=$BOLD_YELLOW ;;
